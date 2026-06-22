@@ -1,0 +1,10 @@
+[
+   {
+      "name": "ADDMSH",
+      "kmat": 1,
+      "knod": 0,
+      "filename" : "rotor.vtk",
+      "surf": -2,
+      "val": 0.02775
+   }
+]

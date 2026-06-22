@@ -1,0 +1,15 @@
+[
+   {
+      "name": "MIRROR_ROT",
+      "axis": 2,
+      "deg": 45.0,
+      "node_del": 1,
+       "map_make": 0
+   },
+   {
+      "name": "ROTXYZ",
+       "axis": 2,
+       "deg": 45.0,
+      "range": [-100.0, 100.0, -100.0, 100.0, -100.0, 100.0]
+   }
+]
