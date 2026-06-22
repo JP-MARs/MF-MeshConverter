@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meshフォーマットについて &mdash; mf-meshconverter  ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=c033477b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Modification examples" href="ModExample.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mf-meshconverter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Meshフォーマットについて</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id">IDの始まりについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">自作メッシュフォーマットについて</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jpmmesh">jpmmeshフォーマット</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jpmmesh-e">jpmmesh_eフォーマット(辺あり)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ModExample.html">Modification examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mf-meshconverter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Meshフォーマットについて</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Format.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div style="text-align: justify;">
+<section class="tex2jax_ignore mathjax_ignore" id="mesh">
+<h1>Meshフォーマットについて<a class="headerlink" href="#mesh" title="Link to this heading"></a></h1>
+<section id="id">
+<h2>IDの始まりについて<a class="headerlink" href="#id" title="Link to this heading"></a></h2>
+<p> 節点や要素のIDは、C++の都合上、プログラム内では全て「0始まり」「連番」で記述しています。メッシュを読み込んだ際、非連番の場合は読み取った順にゼロ始まりで連番になるようにIDを書き換えます。もとの節点・要素IDが重要な場合はご注意ください。メッシュを読み込んだ際に、元のIDを記憶する機能があります。ConvMeshクラスのメンバとして、「node_map」「ele_map」に元IDと振りなおしIDの対応を記憶しているので、必要な場合は活用してください。現在、デフォルト機能として対応関係を書き出す機能は作っていません。</p>
+<p> メッシュ書き出す場合、ID=0に対応していないフォーマットは+1して書き出します。書き出し時に+1するかどうかは下記のとおりです。</p>
+<p>・+1して書き出すフォーマット：
+unv, atlas, neu</p>
+<p>・0始まりのまま書き出すフォーマット：
+vtk, jpmmesh, jpmmesh_e</p>
+<p>・書き出し非対応フォーマット：
+msh, mesh</p>
+<p> メッシュ操作を行う場合、節点や要素のIDをjsonで支持する場合、「1始まり」をデフォルトとしています。
+多くのメッシュビューアは「1始まり」だと思うので、表示されている値をそのまま利用すればよいはずです。</p>
+<p> ただ、paraviewは0始まりに対応しており、vtkは0始まりで処理しているので、現状paraviewでvtkを読み取った際は、デフォルト記述だと変になります。
+paraview利用時のみ、表示されているIDを+1して利用するか、「NUMBER_ID」コマンドでゼロ始まりモードに変更してください。</p>
+</section>
+<section id="id1">
+<h2>自作メッシュフォーマットについて<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p> 本OSS独自フォーマットとして、「jpmmesh」「jpmmesh_e」形式を作っています。「jpmmesh_e」は辺も書き出すフォーマットです。FEMなどで使うように、予めフォーマットの段階から隣接情報や（電磁気に使う辺の情報）を書き出すFEM特化フォーマットです。（隣接情報などを作るため、他の書き出しより前処理に少し時間を要します）</p>
+<section id="jpmmesh">
+<h3>jpmmeshフォーマット<a class="headerlink" href="#jpmmesh" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Node</span> <span class="c1">#ラベル</span>
+<span class="n">node_num</span> <span class="c1">#節点数</span>
+<span class="nb">id</span> <span class="n">x</span> <span class="n">y</span> <span class="n">z</span>  <span class="c1">#節点IDと、その座標をx, y, zの順で。以降、node_numだけ繰り返し</span>
+<span class="o">....</span>
+
+<span class="n">Element</span> <span class="c1">#ラベル</span>
+<span class="n">ele_num</span> <span class="c1">#全要素数</span>
+<span class="mi">3</span><span class="n">D</span>  <span class="c1">#3D要素の数</span>
+<span class="mi">2</span><span class="n">D</span>  <span class="c1">#2D要素の数</span>
+<span class="mi">1</span><span class="n">D</span>  <span class="c1">#1D要素の数</span>
+<span class="n">Info</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">303</span> <span class="mi">1</span>   <span class="c1">#ラベル、要素ID、要素タイプ、材料ID</span>
+<span class="mi">17</span> <span class="mi">0</span> <span class="mi">8</span> <span class="mi">18</span> <span class="mi">2698</span> <span class="mi">2681</span> <span class="mi">2689</span> <span class="mi">2699</span>  <span class="c1">#節点IDを要素の節点数分列挙</span>
+<span class="o">....</span> <span class="c1">#以降、ele_numだけ繰り返し</span>
+
+<span class="n">NeighbourElements</span> <span class="c1">#ラベル</span>
+<span class="n">ele_num</span> <span class="c1">#全要素数</span>
+<span class="n">ELE</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">303</span> <span class="mi">4</span> <span class="c1">#ラベル、要素ID、要素タイプ、隣接要素の数 (以降、隣接要素の数だけ繰り返す)</span>
+<span class="mi">303</span> <span class="mi">1</span> <span class="c1">#隣接要素のタイプ、隣接要素のID</span>
+<span class="p">,,,,</span>
+<span class="o">.....</span><span class="c1">#以降、ele_numだけ繰り返し</span>
+
+<span class="n">BoundNodeList</span> <span class="c1">#ラベル</span>
+<span class="n">bn_num</span> <span class="c1">#メッシュ端にある節点の数</span>
+<span class="nb">id</span> <span class="c1">#メッシュ端節点のID</span>
+<span class="o">.....</span><span class="c1">#以降、bn_numだけ繰り返し</span>
+
+<span class="n">MinimumEdge</span> <span class="c1">#ラベル</span>
+<span class="mf">0.001</span> <span class="c1">#最小の辺の長さ</span>
+
+</pre></div>
+</div>
+</section>
+<section id="jpmmesh-e">
+<h3>jpmmesh_eフォーマット(辺あり)<a class="headerlink" href="#jpmmesh-e" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Node</span> <span class="c1">#ラベル</span>
+<span class="n">node_num</span> <span class="c1">#節点数</span>
+<span class="nb">id</span> <span class="n">x</span> <span class="n">y</span> <span class="n">z</span>  <span class="c1">#節点IDと、その座標をx, y, zの順で。以降、node_numだけ繰り返し</span>
+<span class="o">....</span>
+
+<span class="n">Edge</span> <span class="c1">#ラベル</span>
+<span class="n">edge_num</span> <span class="c1">#辺の数</span>
+<span class="nb">id</span> <span class="n">nid1</span> <span class="n">nid2</span> <span class="c1">#辺IDと、始点と終点の節点ID。</span>
+<span class="o">....</span> <span class="c1">#以降、node_numだけ繰り返し</span>
+
+<span class="n">Element</span> <span class="c1">#ラベル</span>
+<span class="n">ele_num</span> <span class="c1">#全要素数</span>
+<span class="mi">3</span><span class="n">D</span>  <span class="c1">#3D要素の数</span>
+<span class="mi">2</span><span class="n">D</span>  <span class="c1">#2D要素の数</span>
+<span class="mi">1</span><span class="n">D</span>  <span class="c1">#1D要素の数</span>
+<span class="n">Info</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">303</span> <span class="mi">1</span>   <span class="c1">#ラベル、要素ID、要素タイプ、材料ID</span>
+<span class="mi">17</span> <span class="mi">0</span> <span class="mi">8</span> <span class="mi">18</span> <span class="mi">2698</span> <span class="mi">2681</span> <span class="mi">2689</span> <span class="mi">2699</span>  <span class="c1">#節点IDを要素の節点数分列挙</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> 　　 <span class="c1">#辺IDを要素の節点数分列挙</span>
+<span class="o">....</span> <span class="c1">#以降、ele_numだけ繰り返し</span>
+
+<span class="n">NeighbourElements</span> <span class="c1">#ラベル</span>
+<span class="n">ele_num</span> <span class="c1">#全要素数</span>
+<span class="n">ELE</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">303</span> <span class="mi">4</span> <span class="c1">#ラベル、要素ID、要素タイプ、隣接要素の数 (以降、隣接要素の数だけ繰り返す)</span>
+<span class="mi">303</span> <span class="mi">1</span> <span class="c1">#隣接要素のタイプ、隣接要素のID</span>
+<span class="p">,,,,</span>
+<span class="o">.....</span><span class="c1">#以降、ele_numだけ繰り返し</span>
+
+<span class="n">BoundNodeList</span> <span class="c1">#ラベル</span>
+<span class="n">bn_num</span> <span class="c1">#メッシュ端にある節点の数</span>
+<span class="nb">id</span> <span class="c1">#メッシュ端節点のID</span>
+<span class="o">.....</span><span class="c1">#以降、bn_numだけ繰り返し</span>
+
+<span class="n">BoundEdgeList</span> <span class="c1">#ラベル</span>
+<span class="n">be_num</span> <span class="c1">#メッシュ端にある辺の数</span>
+<span class="nb">id</span> <span class="c1">#メッシュ端の辺ID</span>
+<span class="o">.....</span><span class="c1">#以降、be_numだけ繰り返し</span>
+
+<span class="n">MinimumEdge</span> <span class="c1">#ラベル</span>
+<span class="mf">0.001</span> <span class="c1">#最小の辺の長さ</span>
+
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ModExample.html" class="btn btn-neutral float-right" title="Modification examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, T.Sato.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
