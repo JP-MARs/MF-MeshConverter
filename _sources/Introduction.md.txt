@@ -26,17 +26,19 @@ Modify Mesh ? : yes=1 or 2, no=0
 ```
 
 **読み込み対応形式**
-* unv (univ/ideal)
+* unv/ids (univ/ideas)
 * neu (FEMAP neutral)
 * vtk (paraview relagy)
 * msh (GMSH)
 * mesh (Medit)
+* atls (ATLAS形式～本来こんなメッシュ用拡張子はないと思いますが、ATLAS形式拡張子として仮設定)
 * 自作形式 (jpmmesh, jpmmesh_e)
 
 **書き出し対応形式**
-* unv (univ/ideal)
+* unv/ids (univ/ideas)
 * neu (FEMAP neutral)
 * vtk (paraview relagy)
+* atls (ATLAS形式～本来こんなメッシュ用拡張子はないと思いますが、ATLAS形式拡張子として仮設定)
 * 自作形式 (jpmmesh, jpmmesh_e)
 
 &ensp;なお、普段は利用しないであろうメッシュフォーマットもいくつか対応しています。
