@@ -9,13 +9,12 @@ on:
       - main
 
 jobs:
-  build_SparseSolv:
+  build_MFconv:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: |
           sudo apt-get update
-          sudo apt-get install python3-dev pybind11-dev
       - run: >
           cmake
           -D CMAKE_CXX_COMPILER=g++
